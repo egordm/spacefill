@@ -8,6 +8,11 @@ This library is inspired by this demo: [Space filling curves](http://lutanho.net
 This demo is created by Lutz Tautenhahn
 
 ## Usage
+Install module
+```commandline
+pip install spacefill
+```
+
 Import the library first
 ```python
 import spacefill.curvetools as curvetools

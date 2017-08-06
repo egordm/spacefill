@@ -26,7 +26,8 @@ setup(
 
         # Indicate who your project is intended for
         'Intended Audience :: Developers',
-        'Topic :: Software Development :: Maths',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: Scientific/Engineering :: Mathematics',
 
         # Pick your license as you wish (should match "license" above)
         'License :: OSI Approved :: MIT License',
