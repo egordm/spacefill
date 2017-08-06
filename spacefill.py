@@ -3,12 +3,17 @@ from typing import List, Tuple
 import numpy as np
 
 
-def generate_map(w: int = 64, h: int = 64, l: int = 0, t: int = 0) -> List[Tuple[int, int]]:
-    """
+def generate_map(w=64, h=64, l=0, t=0):
+    """ Generates a list of subsequential coordinates on the curve which fills 2d space of specified width and height
     :param l: left
+    :type l: int
     :param t: top
+    :type t: int
     :param w: width
+    :type w: int
     :param h: height
+    :type h: int
+    :rtype: list of (int, int)
     :return:
     """
     if h > w:
@@ -23,15 +28,23 @@ def generate_map(w: int = 64, h: int = 64, l: int = 0, t: int = 0) -> List[Tuple
             return go(l, t, w, 0, 0, h, "l")  # go left->right
 
 
-def go(x0: int, y0: int, dxl: int, dyl: int, dxr: int, dyr: int, dir: str) -> List[Tuple[int, int]]:
+def go(x0, y0, dxl, dyl, dxr, dyr, dir):
     """
     :param x0: start corner looking to the center of the rectangle
+    :type x0: int
     :param y0: start corner looking to the center of the rectangle
+    :type y0: int
     :param dxl: vector from the start corner to the left corner of the rectangle
+    :type dxl: int
     :param dyl: vector from the start corner to the left corner of the rectangle
+    :type dyl: int
     :param dxr: vector from the start corner to the right corner of the rectangle
+    :type dxr: int
     :param dyr: vector from the start corner to the right corner of the rectangle
+    :type dyr: int
     :param dir: direction to go - "l"=left, "m"=middle, "r"=right
+    :type dir: str
+    :rtype: list of (int, int)
     :return:
     """
     ret = []
@@ -329,10 +342,13 @@ def go(x0: int, y0: int, dxl: int, dyl: int, dxr: int, dyr: int, dir: str) -> Li
     return ret
 
 
-def coord_to_position(coordinate: Tuple[int, int], curve_map: List[Tuple[int, int]]) -> float:
-    """
+def coord_to_position(coordinate, curve_map):
+    """ Gives a position on the curve which corresponds to given coordinate. Domain: [0, 1]
     :param coordinate: Coordinate within the space the curve is filling
+    :type coordinate: (int, int)
     :param curve_map: Generated curve map
+    :type curve_map: list of (int, int)
+    :rtype: float
     :return:
     """
     i = 0
@@ -344,28 +360,16 @@ def coord_to_position(coordinate: Tuple[int, int], curve_map: List[Tuple[int, in
     return i / max_len
 
 
-def position_to_coord(pos: float, curve_map: List[Tuple[int, int]]) -> Tuple[int, int]:
-    """
+def position_to_coord(pos, curve_map):
+    """ Gives a coordinate which corresponds to given position.
     :param pos: Position on the curve. Domain [0, 1]
+    :type pos: float
     :param curve_map: Generated curve map
+    :type curve_map: list of (int, int)
+    :rtype: (int, int)
     :return:
     """
     curve_length = len(curve_map) - 1
     ipos = round(curve_length * pos)
     if ipos > curve_length: raise Exception('Point is not on the curve!')
     return curve_map[ipos]
-
-
-curve_map = generate_map(64, 32)
-print(len(curve_map))
-# print(curve_map)
-point = coord_to_position((25, 25), curve_map)
-coord = position_to_coord(point, curve_map)
-print('Point: {}, Coord: {}'.format(point, coord))
-
-import matplotlib.pyplot as plt
-
-px, py = zip(*curve_map)
-plt.plot(px, py)
-plt.plot([coord[0]], [coord[1]], 'ro')
-plt.show()
