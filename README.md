@@ -15,18 +15,23 @@ import spacefill.curvetools as curvetools
 
 Generate a curve map. This can be stored so you dont have to generate it again. A curve map is a list of subsequent coordinates.
 ```python
-curve_map = curvetools.generate_map(64, 48)
+>> curve_map = curvetools.generate_map(64, 48)
 ```
 
 Get a position on the curve by its coordinate:
 ```python
-point = curvetools.coord_to_position((25, 25), curve_map)
+>> point = curvetools.coord_to_position((25, 25), curve_map)
+0.48518397915988276
 ```
 
 Get a coordinate on the curve by its position:
 ```python
-coordinate = curvetools.position_to_coord(point, curve_map)
+>> coordinate = curvetools.position_to_coord(point, curve_map)
+(25.0, 25.0)
 ```
+
+![Example space 64x48](https://raw.githubusercontent.com/EgorDm/spacefill/master/examples/Example1.png)
+
 
 Thats basically it. More functions will be added soon.
 
