@@ -27,3 +27,8 @@ cmake-build-debug/
 
 ## File-based project format:
 *.iws
+
+## Project files
+dist/
+*.egg-info/
+*.egg
