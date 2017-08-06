@@ -32,3 +32,4 @@ cmake-build-debug/
 dist/
 *.egg-info/
 *.egg
+build/
