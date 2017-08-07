@@ -13,19 +13,20 @@ def generate_map(w=64, h=64, l=0, t=0):
     :type w: int
     :param h: height
     :type h: int
-    :rtype: list of (int, int)
+    :rtype: (list of (int, int), dict of (int, int): int)
     :return:
     """
     if h > w:
         if (h % 2 == 1) and (w % 2 == 0):
-            return go(l, t, w, 0, 0, h, "m")  # go diagonal
+            ret = go(l, t, w, 0, 0, h, "m")  # go diagonal
         else:
-            return go(l, t, w, 0, 0, h, "r")  # go top->down
+            ret = go(l, t, w, 0, 0, h, "r")  # go top->down
     else:
         if (w % 2 == 1) and (h % 2 == 0):
-            return go(l, t, w, 0, 0, h, "m")  # go diagonal
+            ret = go(l, t, w, 0, 0, h, "m")  # go diagonal
         else:
-            return go(l, t, w, 0, 0, h, "l")  # go left->right
+            ret = go(l, t, w, 0, 0, h, "l")  # go left->right
+    return ret, dict((cord, i) for i, cord in enumerate(ret))
 
 
 def go(x0, y0, dxl, dyl, dxr, dyr, dir):
@@ -347,17 +348,16 @@ def coord_to_position(coordinate, curve_map):
     :param coordinate: Coordinate within the space the curve is filling
     :type coordinate: (int, int)
     :param curve_map: Generated curve map
-    :type curve_map: list of (int, int)
+    :type curve_map: (list of (int, int), dict of (int, int): int)
     :rtype: float
     :return:
     """
-    i = 0
-    max_len = len(curve_map) - 1
-    while i <= max_len:
-        if curve_map[i] == coordinate: break
-        i += 1
-    if i > max_len: raise Exception('Coordinate is not on the the curve!')
-    return i / max_len
+    max_len = len(curve_map[0]) - 1
+    try:
+        i = curve_map[1][coordinate]
+        return i / max_len
+    except Exception:
+        raise Exception('Coordinate is not on the the curve!')
 
 
 def position_to_coord(pos, curve_map):
@@ -365,11 +365,13 @@ def position_to_coord(pos, curve_map):
     :param pos: Position on the curve. Domain [0, 1]
     :type pos: float
     :param curve_map: Generated curve map
-    :type curve_map: list of (int, int)
+    :type curve_map: (list of (int, int), dict of (int, int): int)
     :rtype: (int, int)
     :return:
     """
-    curve_length = len(curve_map) - 1
+    curve_length = len(curve_map[0]) - 1
     ipos = round(curve_length * pos)
-    if ipos > curve_length: raise Exception('Point is not on the curve!')
-    return curve_map[ipos]
+    try:
+        return curve_map[0][ipos]
+    except Exception:
+        raise Exception('Point is not on the curve!')

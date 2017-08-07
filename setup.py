@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='spacefill',
-    version='0.1.0',
+    version='0.1.1',
 
     description='Library containing functions to create space filling curves.',
 

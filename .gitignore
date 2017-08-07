@@ -33,3 +33,4 @@ dist/
 *.egg-info/
 *.egg
 build/
+src/test.py
